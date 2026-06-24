@@ -1,0 +1,51 @@
+.calendar-wrapper {
+  padding: 20px;
+  background: #fffaf5;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #e63946;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.day {
+  height: 80px;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* COLORS BASED ON BOOKINGS */
+.available {
+  border: 2px solid #ff9a3c;
+}
+
+.light {
+  background: #ffe5d0;
+}
+
+.medium {
+  background: #ffb26b;
+}
+
+.full {
+  background: #e63946;
+  color: white;
+}
+
+.empty {
+  height: 80px;
+}
