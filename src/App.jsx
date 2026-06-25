@@ -1,63 +1,43 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
 
-function Home() {
-  return <h1>Home Page Works</h1>;
-}
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import Calendar from "./pages/Calendar";
+import Products from "./pages/Products";
+import Notifications from "./pages/Notifications";
+import Admin from "./pages/Admin";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
-function Dashboard() {
-  return <h1>Dashboard Works</h1>;
-}
-
-function Clients() {
-  return <h1>Clients Page Works</h1>;
-}
-
-function Therapists() {
-  return <h1>Therapists Page Works</h1>;
-}
+import Clients from "./components/Clients";
+import Therapists from "./components/Therapists";
+import Booking from "./components/Booking";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Home />} />
 
-        <Route
-          path="/"
-          element={
-            <Layout>
-              <Home />
-            </Layout>
-          }
-        />
+        <Route path="/dashboard" element={<Dashboard />} />
 
-        <Route
-          path="/dashboard"
-          element={
-            <Layout>
-              <Dashboard />
-            </Layout>
-          }
-        />
+        <Route path="/clients" element={<Clients />} />
 
-        <Route
-          path="/clients"
-          element={
-            <Layout>
-              <Clients />
-            </Layout>
-          }
-        />
+        <Route path="/therapists" element={<Therapists />} />
 
-        <Route
-          path="/therapists"
-          element={
-            <Layout>
-              <Therapists />
-            </Layout>
-          }
-        />
+        <Route path="/booking" element={<Booking />} />
 
+        <Route path="/calendar" element={<Calendar />} />
+
+        <Route path="/products" element={<Products />} />
+
+        <Route path="/notifications" element={<Notifications />} />
+
+        <Route path="/admin" element={<Admin />} />
+
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );
