@@ -1,20 +1,18 @@
-import { Link } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import Navbar from "./Navbar";
 
 export default function Layout({ children }) {
   return (
-    <div>
-      <h2>Skin Profile System</h2>
+    <div className="app-layout">
+      <Sidebar />
 
-      <nav>
-        <Link to="/">Home</Link> |{" "}
-        <Link to="/dashboard">Dashboard</Link> |{" "}
-        <Link to="/clients">Clients</Link> |{" "}
-        <Link to="/therapists">Therapists</Link>
-      </nav>
+      <div className="main-section">
+        <Navbar />
 
-      <hr />
-
-      {children}
+        <div className="page-content">
+          {children}
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,67 +1,66 @@
 import { useState } from "react";
-import Layout from "./Layout";
-import { useNavigate } from "react-router-dom";
 
-function AddClient() {
-  const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
+export default function AddClient() {
+  const [client, setClient] = useState({
+    fullName: "",
     email: "",
     phone: "",
-    age: "",
     skinType: "",
+    concerns: "",
   });
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setClient({
+      ...client,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    fetch("http://localhost:8080/api/clients", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
-      .then((res) => res.json())
-      .then(() => {
-        alert("Client added successfully!");
-        navigate("/clients");
-      })
-      .catch((err) => console.error(err));
+    console.log(client);
+    alert("Client Added Successfully");
   };
 
   return (
-    <Layout>
-      <h1 style={{ color: "#e63946" }}>Add Client</h1>
+    <div className="form-card">
+      <h2>Add Client</h2>
 
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input name="firstName" placeholder="First Name" onChange={handleChange} />
-        <input name="lastName" placeholder="Last Name" onChange={handleChange} />
-        <input name="email" placeholder="Email" onChange={handleChange} />
-        <input name="phone" placeholder="Phone" onChange={handleChange} />
-        <input name="age" placeholder="Age" onChange={handleChange} />
-        <input name="skinType" placeholder="Skin Type" onChange={handleChange} />
+      <form onSubmit={handleSubmit}>
+        <input
+          name="fullName"
+          placeholder="Full Name"
+          onChange={handleChange}
+        />
+
+        <input
+          name="email"
+          placeholder="Email"
+          onChange={handleChange}
+        />
+
+        <input
+          name="phone"
+          placeholder="Phone Number"
+          onChange={handleChange}
+        />
+
+        <select name="skinType" onChange={handleChange}>
+          <option>Skin Type</option>
+          <option>Dry</option>
+          <option>Oily</option>
+          <option>Combination</option>
+          <option>Sensitive</option>
+        </select>
+
+        <textarea
+          name="concerns"
+          placeholder="Skin Concerns"
+          onChange={handleChange}
+        />
 
         <button type="submit">Save Client</button>
       </form>
-    </Layout>
+    </div>
   );
 }
-
-const styles = {
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px",
-    maxWidth: "400px",
-    marginTop: "20px",
-  },
-};
-
-export default AddClient;
