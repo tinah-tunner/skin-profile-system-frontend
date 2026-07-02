@@ -20,7 +20,7 @@ function Booking() {
   // LOAD BOOKINGS (BACKEND)
   // =========================
   useEffect(() => {
-    fetch("http://localhost:8080/api/bookings")
+    fetch("https://skin-profile-system-backendfinal.onrender.com/api/bookings")
       .then((res) => res.json())
       .then((data) => setBookings(data))
       .catch((err) => console.error("Error loading bookings:", err));
@@ -39,7 +39,7 @@ function Booking() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:8080/api/bookings", {
+    fetch("https://skin-profile-system-backendfinal.onrender.com/api/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +65,7 @@ function Booking() {
   // DELETE BOOKING (BACKEND)
   // =========================
   const handleDelete = (id) => {
-    fetch(`http://localhost:8080/api/bookings/${id}`, {
+    fetch(`https://skin-profile-system-backendfinal.onrender.com/api/bookings/${id}`, {
       method: "DELETE",
     })
       .then(() => {
@@ -80,7 +80,7 @@ function Booking() {
   // =========================
   const handleStatusChange = (id, status) => {
     fetch(
-      `http://localhost:8080/api/bookings/${id}/status?status=${status}`,
+      `https://skin-profile-system-backendfinal.onrender.com/api/bookings/${id}/status?status=${status}`,
       {
         method: "PUT",
       }

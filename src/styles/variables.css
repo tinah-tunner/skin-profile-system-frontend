@@ -1,0 +1,48 @@
+:root{
+
+/* ==========================
+   BAKENE BRAND
+========================== */
+
+--primary:#F4A261;
+--primary-hover:#EA8B3D;
+
+--rose:#F8E5DD;
+
+--background:#FFF9F5;
+
+--card:#FFFFFF;
+
+--sidebar:#FFFFFF;
+
+--text:#444;
+
+--light-text:#8D8D8D;
+
+--border:#F2DED4;
+
+
+/* ==========================
+   SHADOWS
+========================== */
+
+--shadow-soft:
+0 8px 25px rgba(232,180,160,.20);
+
+--shadow-hover:
+0 15px 35px rgba(244,162,97,.25);
+
+
+/* ==========================
+   BORDER
+========================== */
+
+--radius:22px;
+
+
+/* ==========================
+   TRANSITIONS
+========================== */
+
+--transition:.35s ease;
+}

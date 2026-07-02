@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/api";
+const API_URL = "https://skin-profile-system-backendfinal.onrender.com";
 
 export const loginUser = async (data) => {
   const response = await fetch(`${API_URL}/auth/login`, {

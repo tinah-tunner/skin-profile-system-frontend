@@ -5,7 +5,7 @@ function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [bookings, setBookings] = useState([]);
 
-  const API_URL = "http://localhost:8080/api/bookings";
+  const API_URL = "https://skin-profile-system-backendfinal.onrender.com";
 
   useEffect(() => {
     fetch(API_URL)

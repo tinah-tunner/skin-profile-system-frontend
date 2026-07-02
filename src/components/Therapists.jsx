@@ -47,7 +47,7 @@ function Therapists() {
 ]); 
 
   const load = () => {
-    fetch("http://localhost:8080/api/therapists")
+    fetch("https://skin-profile-system-backendfinal.onrender.com/api/therapists")
       .then((res) => res.json())
       .then((data) => setTherapists(data))
       .catch((err) => console.error(err));
@@ -58,7 +58,7 @@ function Therapists() {
   }, []);
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:8080/api/therapists/${id}`, {
+    fetch(`https://skin-profile-system-backendfinal.onrender.com/api/therapists/${id}`, {
       method: "DELETE",
     }).then(() => load());
   };

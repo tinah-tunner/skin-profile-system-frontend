@@ -1,24 +1,63 @@
-const BASE_URL = "http://localhost:8080/api";
+const BASE_URL = "https://skin-profile-system-backendfinal.onrender.com/api";
 
-export const api = {
-  // USERS
-  getUsers: () => fetch(`${BASE_URL}/auth/users`).then(res => res.json()),
+// =========================
+// LOGIN
+// =========================
+export async function login(email, password) {
+  const response = await fetch(`${BASE_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
 
-  approveUser: (id) =>
-    fetch(`${BASE_URL}/users/${id}/approve`, {
-      method: "PUT",
-    }),
+  if (!response.ok) {
+    throw new Error("Invalid email or password");
+  }
 
-  // BOOKINGS
-  getBookings: () =>
-    fetch(`${BASE_URL}/bookings`).then(res => res.json()),
+  return await response.json();
+}
 
-  updateBookingStatus: (id, status) =>
-    fetch(`${BASE_URL}/bookings/${id}?status=${status}`, {
-      method: "PUT",
-    }),
+// =========================
+// REGISTER
+// =========================
+export async function register(userData) {
+  const response = await fetch(`${BASE_URL}/auth/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
 
-  // NOTIFICATIONS
-  getNotifications: () =>
-    fetch(`${BASE_URL}/notifications/ADMIN`).then(res => res.json()),
-};
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return await response.json();
+}
+
+// =========================
+// AUTHENTICATED REQUESTS
+// =========================
+export async function apiFetch(endpoint, options = {}) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...(token && {
+        Authorization: `Bearer ${token}`,
+      }),
+      ...options.headers,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return await response.json();
+}

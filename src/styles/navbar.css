@@ -1,0 +1,126 @@
+.navbar{
+    height:80px;
+    background:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 30px;
+    box-shadow:var(--shadow-soft);
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.nav-left{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.menu-btn{
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:14px;
+    background:var(--primary);
+    color:white;
+    font-size:20px;
+}
+
+.menu-btn:hover{
+    background:var(--primary-hover);
+}
+
+.nav-title{
+    color:var(--primary);
+    margin:0;
+}
+
+.nav-subtitle{
+    color:var(--light-text);
+    font-size:14px;
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    position:relative;
+}
+
+.icon-btn{
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:50%;
+    background:white;
+    color:var(--primary);
+    font-size:22px;
+    box-shadow:var(--shadow-soft);
+}
+
+.icon-btn:hover{
+    transform:translateY(-2px);
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    cursor:pointer;
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:var(--primary);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+}
+
+.profile-info{
+    display:flex;
+    flex-direction:column;
+}
+
+.profile-info strong{
+    color:var(--primary);
+}
+
+.profile-info small{
+    color:var(--light-text);
+}
+
+.profile-menu{
+    position:absolute;
+    top:70px;
+    right:0;
+    background:white;
+    border-radius:18px;
+    width:220px;
+    box-shadow:var(--shadow-hover);
+    overflow:hidden;
+    border:1px solid var(--border);
+}
+
+.profile-menu button{
+    width:100%;
+    padding:15px;
+    border:none;
+    background:white;
+    text-align:left;
+    color:var(--primary);
+}
+
+.profile-menu button:hover{
+    background:var(--rose);
+}
+
+.logout-option{
+    border-top:1px solid var(--border);
+}

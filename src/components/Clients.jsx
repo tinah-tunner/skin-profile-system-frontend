@@ -21,7 +21,7 @@ function Clients() {
 });
 
   const loadClients = () => {
-    fetch("http://localhost:8080/api/clients")
+    fetch("https://skin-profile-system-backendfinal.onrender.com/api/clients")
       .then((res) => res.json())
       .then((data) => setClients(data))
       .catch((err) => console.error(err));
@@ -32,7 +32,7 @@ function Clients() {
   }, []);
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:8080/api/clients/${id}`, {
+    fetch(`https://skin-profile-system-backendfinal.onrender.com/api/clients/${id}`, {
       method: "DELETE",
     }).then(() => loadClients());
   };
@@ -42,7 +42,7 @@ function Clients() {
   };
 
   const handleUpdate = () => {
-    fetch(`http://localhost:8080/api/clients/${editingClient.id}`, {
+    fetch(`https://skin-profile-system-backendfinal.onrender.com/api/clients/${editingClient.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ function Clients() {
   };
 
   const handleAddClient = () => {
-    fetch("http://localhost:8080/api/clients", {
+    fetch("https://skin-profile-system-backendfinal.onrender.com/api/clients", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,15 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Layout from "./components/Layout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Calendar from "./pages/Calendar";
 import Products from "./pages/Products";
 import Notifications from "./pages/Notifications";
-import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+
+import AdminDashboard from "./pages/AdminDashboard";
+import TherapistDashboard from "./pages/TherapistDashboard";
+import ClientDashboard from "./pages/ClientDashboard";
 
 import Clients from "./components/Clients";
 import Therapists from "./components/Therapists";
@@ -40,13 +44,48 @@ export default function App() {
           }
         />
 
-        {/* Dashboard */}
+        {/* General Dashboard */}
         <Route
           path="/dashboard"
           element={
             <Layout>
               <Dashboard />
             </Layout>
+          }
+        />
+
+        {/* Protected Dashboards */}
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <Layout>
+                <AdminDashboard />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/therapist"
+          element={
+            <ProtectedRoute allowedRoles={["THERAPIST"]}>
+              <Layout>
+                <TherapistDashboard />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/client"
+          element={
+            <ProtectedRoute allowedRoles={["CLIENT"]}>
+              <Layout>
+                <ClientDashboard />
+              </Layout>
+            </ProtectedRoute>
           }
         />
 
@@ -106,16 +145,6 @@ export default function App() {
           element={
             <Layout>
               <Notifications />
-            </Layout>
-          }
-        />
-
-        {/* Admin */}
-        <Route
-          path="/admin"
-          element={
-            <Layout>
-              <Admin />
             </Layout>
           }
         />
