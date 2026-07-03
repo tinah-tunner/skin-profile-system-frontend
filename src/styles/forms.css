@@ -42,3 +42,55 @@ font-weight:600;
 color:var(--primary);
 
 }
+/* ==========================
+   Multi-Step Form
+========================== */
+
+.step-header{
+    margin-bottom:30px;
+}
+
+.progress-bar{
+    width:100%;
+    height:10px;
+    background:#f3f3f3;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.progress-fill{
+    height:100%;
+    background:linear-gradient(90deg,#B76E79,#F4A261);
+    transition:width .5s ease;
+}
+
+.slide-form{
+    animation:slideIn .45s ease;
+}
+
+@keyframes slideIn{
+
+from{
+    opacity:0;
+    transform:translateX(60px);
+}
+
+to{
+    opacity:1;
+    transform:translateX(0);
+}
+
+}
+
+.step-buttons{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-top:35px;
+
+gap:20px;
+
+}

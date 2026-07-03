@@ -1,81 +1,45 @@
 .navbar{
-    height:80px;
-    background:white;
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #f3d7c6;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:0 30px;
-    box-shadow:var(--shadow-soft);
-    border-bottom:1px solid var(--border);
-    position:sticky;
-    top:0;
-    z-index:100;
-}
-
-.nav-left{
-    display:flex;
-    align-items:center;
-    gap:20px;
-}
-
-.menu-btn{
-    width:45px;
-    height:45px;
-    border:none;
-    border-radius:14px;
-    background:var(--primary);
-    color:white;
-    font-size:20px;
-}
-
-.menu-btn:hover{
-    background:var(--primary-hover);
+    padding:0 24px;
 }
 
 .nav-title{
-    color:var(--primary);
-    margin:0;
+    color:#ff7a18;
+    font-size:24px;
+    font-weight:700;
 }
 
 .nav-subtitle{
-    color:var(--light-text);
-    font-size:14px;
+    color:#888;
+    font-size:13px;
 }
 
 .nav-right{
     display:flex;
     align-items:center;
-    gap:20px;
-    position:relative;
+    gap:18px;
 }
 
 .icon-btn{
-    width:45px;
-    height:45px;
+    width:42px;
+    height:42px;
     border:none;
     border-radius:50%;
-    background:white;
-    color:var(--primary);
-    font-size:22px;
-    box-shadow:var(--shadow-soft);
-}
-
-.icon-btn:hover{
-    transform:translateY(-2px);
-}
-
-.profile{
-    display:flex;
-    align-items:center;
-    gap:12px;
+    background:#fff4ec;
+    color:#ff7a18;
     cursor:pointer;
 }
 
 .avatar{
-    width:45px;
-    height:45px;
+    width:44px;
+    height:44px;
     border-radius:50%;
-    background:var(--primary);
+    background:#ff7a18;
     color:white;
     display:flex;
     justify-content:center;
@@ -83,29 +47,23 @@
     font-weight:bold;
 }
 
-.profile-info{
+.profile{
     display:flex;
-    flex-direction:column;
-}
-
-.profile-info strong{
-    color:var(--primary);
-}
-
-.profile-info small{
-    color:var(--light-text);
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
 }
 
 .profile-menu{
     position:absolute;
-    top:70px;
-    right:0;
+    top:65px;
+    right:15px;
+    width:220px;
     background:white;
     border-radius:18px;
-    width:220px;
-    box-shadow:var(--shadow-hover);
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+    border:1px solid #f3d7c6;
     overflow:hidden;
-    border:1px solid var(--border);
 }
 
 .profile-menu button{
@@ -113,14 +71,10 @@
     padding:15px;
     border:none;
     background:white;
+    color:#ff7a18;
     text-align:left;
-    color:var(--primary);
 }
 
 .profile-menu button:hover{
-    background:var(--rose);
-}
-
-.logout-option{
-    border-top:1px solid var(--border);
+    background:#fff4ec;
 }

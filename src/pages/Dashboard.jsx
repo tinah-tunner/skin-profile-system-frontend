@@ -1,63 +1,122 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "../components/Layout";
+import { getDashboardStats } from "../services/dashboardService";
 
 function Dashboard() {
   const navigate = useNavigate();
 
-  // ONLY ONE cards array (clean + correct)
+  const [stats, setStats] = useState({
+    totalClients: 0,
+    totalTherapists: 0,
+    totalBookings: 0,
+    totalProducts: 0,
+  });
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadDashboard() {
+      try {
+        const data = await getDashboardStats();
+        setStats(data);
+      } catch (error) {
+        console.error("Failed to load dashboard", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadDashboard();
+  }, []);
+
   const cards = [
-    { title: "Clients", icon: "👥", route: "/clients", color: "#ff7a18" },
-    { title: "Therapists", icon: "💆", route: "/therapists", color: "#e63946" },
-    { title: "Bookings", icon: "📅", route: "/booking", color: "#f77f00" },
-    { title: "Products", icon: "🧴", route: "/products", color: "#d62828" },
+    {
+      title: "Clients",
+      value: stats.totalClients,
+      icon: "👥",
+      route: "/clients",
+    },
+    {
+      title: "Therapists",
+      value: stats.totalTherapists,
+      icon: "💆",
+      route: "/therapists",
+    },
+    {
+      title: "Bookings",
+      value: stats.totalBookings,
+      icon: "📅",
+      route: "/booking",
+    },
+    {
+      title: "Products",
+      value: stats.totalProducts,
+      icon: "🧴",
+      route: "/products",
+    },
   ];
 
-  return (
-    <Layout>
-      <h1 style={{ color: "#ff7a18" }}>Dashboard</h1>
-      <p>Click a section to manage it</p>
+  if (loading) {
+    return <h2>Loading dashboard...</h2>;
+  }
 
-      <div style={styles.grid}>
-        {cards.map((card) => (
-          <div
-            key={card.title}
-            onClick={() => navigate(card.route)}
-            style={{
-              ...styles.card,
-              borderLeft: `6px solid ${card.color}`,
-            }}
-          >
-            <h2>
-              {card.icon} {card.title}
-            </h2>
-            <p style={styles.text}>Open</p>
-          </div>
-        ))}
+ return (
+  <>
+    <h1 className="nav-title">Dashboard</h1>
+
+    <div className="dashboard-grid">
+      {cards.map((card) => (
+        <div
+          key={card.title}
+          className="stat-card"
+          onClick={() => navigate(card.route)}
+        >
+          <div className="stat-icon">{card.icon}</div>
+
+          <div className="stat-title">{card.title}</div>
+
+          <div className="stat-number">{card.value}</div>
+        </div>
+      ))}
+    </div>
+
+    <div className="dashboard-bottom">
+
+      <div className="panel">
+        <h3>Upcoming Appointments</h3>
+
+        <p>No appointments today.</p>
       </div>
-    </Layout>
-  );
+
+      <div className="panel">
+
+        <h3>Quick Actions</h3>
+
+        <button
+          className="quick-btn"
+          onClick={() => navigate("/add-client")}
+        >
+          + Add Client
+        </button>
+
+        <button
+          className="quick-btn"
+          onClick={() => navigate("/booking")}
+        >
+          Book Appointment
+        </button>
+
+        <button
+          className="quick-btn"
+          onClick={() => navigate("/products")}
+        >
+          View Products
+        </button>
+
+      </div>
+
+    </div>
+  </>
+);
 }
-
-const styles = {
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-    gap: "15px",
-    marginTop: "20px",
-  },
-
-  card: {
-    background: "white",
-    borderRadius: "12px",
-    padding: "20px",
-    cursor: "pointer",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-    transition: "0.2s",
-  },
-
-  text: {
-    color: "#666",
-  },
-};
-
 export default Dashboard;
