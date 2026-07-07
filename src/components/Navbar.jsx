@@ -1,37 +1,46 @@
+
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import logo from "../assets/logo.jpeg";
 
 function Navbar() {
   const { user, logout } = useAuth();
   const [showMenu, setShowMenu] = useState(false);
 
-  const initials = user?.email
-    ? user.email.substring(0, 2).toUpperCase()
+  const initials = user?.fullName
+    ? user.fullName
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .substring(0, 2)
+        .toUpperCase()
     : "BK";
 
   return (
     <header className="navbar">
-      {/* Left Side */}
       <div className="nav-left">
+
         <button className="menu-btn">☰</button>
 
+        <img
+          src={logo}
+          alt="Bakene"
+          className="navbar-logo"
+        />
+
         <div>
-          <h2 className="nav-title">Dashboard</h2>
+          <h2 className="nav-title">Skin Profile System</h2>
           <p className="nav-subtitle">
-            Welcome, {user?.email || "Guest"}
+
           </p>
         </div>
+
       </div>
 
-      {/* Right Side */}
       <div className="nav-right">
 
-        {/* Notification */}
-        <button className="icon-btn">
-          🔔
-        </button>
+        <button className="icon-btn">🔔</button>
 
-        {/* Profile */}
         <div
           className="profile"
           onClick={() => setShowMenu(!showMenu)}
@@ -41,7 +50,7 @@ function Navbar() {
           </div>
 
           <div className="profile-info">
-            <strong>{user?.role}</strong>
+            <strong>{user?.role || "User"}</strong>
             <small>{user?.email}</small>
           </div>
 
@@ -51,23 +60,20 @@ function Navbar() {
         {showMenu && (
           <div className="profile-menu">
 
-            <button>
-              👤 My Profile
-            </button>
+            <button>👤 My Profile</button>
 
-            <button>
-              ⚙ Settings
-            </button>
+            <button>⚙ Settings</button>
 
             <button
-              onClick={logout}
               className="logout-option"
+              onClick={logout}
             >
               🚪 Logout
             </button>
 
           </div>
         )}
+
       </div>
     </header>
   );

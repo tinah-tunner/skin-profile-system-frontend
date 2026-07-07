@@ -27,29 +27,191 @@
     color:#999;
     font-size:13px;
 }
+/* ==========================
+   SIDEBAR BUTTONS
+========================== */
 
-.sidebar-links{
+.sidebar a{
     display:flex;
-    flex-direction:column;
-    gap:8px;
-}
+    align-items:center;
+    gap:14px;
 
-.sidebar-links a{
+    margin-bottom:12px;
+    padding:14px 18px;
+
     text-decoration:none;
-    color:#555;
-    padding:14px 16px;
-    border-radius:14px;
-    transition:.25s;
+    color:#444;
+
+    background:#ffffff;
+
+    border-radius:16px;
+
+    border:1px solid rgba(216,154,123,.15);
+
+    box-shadow:
+        0 6px 18px rgba(216,154,123,.12);
+
+    transition:all .35s ease;
+
+    position:relative;
+    overflow:hidden;
+}
+.sidebar a:hover{
+
+    transform:
+        translateX(6px)
+        translateY(-2px);
+
+    background:linear-gradient(
+        135deg,
+        #fff7f4,
+        #ffffff
+    );
+
+    box-shadow:
+        0 14px 28px rgba(216,154,123,.25);
+
+    border-color:rgba(216,154,123,.45);
+}
+.sidebar a.active{
+
+    background:linear-gradient(
+        135deg,
+        #d89a7b,
+        #f97316
+    );
+
+    color:white;
+
+    box-shadow:
+        0 16px 35px rgba(216,154,123,.45);
+
+    border:none;
+}
+.sidebar a:hover svg{
+
+    transform:
+        rotate(-8deg)
+        scale(1.18);
+
+}
+.sidebar a:nth-child(1) svg{
+    color:#f97316;
+}
+
+.sidebar a:nth-child(2) svg{
+    color:#06b6d4;
+}
+
+.sidebar a:nth-child(3) svg{
+    color:#ec4899;
+}
+
+.sidebar a:nth-child(4) svg{
+    color:#10b981;
+}
+
+.sidebar a:nth-child(5) svg{
+    color:#8b5cf6;
+}
+
+.sidebar a:nth-child(6) svg{
+    color:#ef4444;
+}
+
+.sidebar a:nth-child(7) svg{
+    color:#f59e0b;
+}
+
+.sidebar a:nth-child(8) svg{
+    color:#0ea5e9;
+}.sidebar a.active svg{
+
+    color:white;
+}
+.sidebar a::after{
+
+content:"";
+
+position:absolute;
+
+top:0;
+left:-120%;
+
+width:60%;
+height:100%;
+
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.55),
+transparent
+);
+
+transition:.6s;
+
+}
+.sidebar a:hover::after{
+
+left:160%;
+
+}
+.sidebar-logo{
+
+    width:95px;
+
+    height:auto;
+
+    display:block;
+
+    margin:0 auto 15px;
+
+    transition:.35s;
+
+    cursor:pointer;
+
+}
+
+.sidebar-logo:hover{
+
+    transform:scale(1.08);
+
+    filter:drop-shadow(0 0 12px rgba(255,107,0,.45));
+
+}
+
+.brand{
+
+    text-align:center;
+
+    padding:25px 15px;
+
+    border-bottom:2px solid rgba(217,140,106,.35);
+
+    margin-bottom:20px;
+
+}
+
+.brand h1{
+
+    color:#ff6b00;
+
+    font-size:28px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    margin-bottom:5px;
+
+}
+
+.brand p{
+
+    color:#8c5a44;
+
+    font-size:14px;
+
     font-weight:600;
-}
 
-.sidebar-links a:hover{
-    background:#ff7a18;
-    color:white;
-    transform:translateX(4px);
-}
-
-.sidebar-links a.active{
-    background:#ff7a18;
-    color:white;
 }

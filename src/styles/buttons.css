@@ -1,42 +1,110 @@
-button{
+button,
+.btn{
 
-cursor:pointer;
+position:relative;
+overflow:hidden;
 
-transition:var(--transition);
-
-font-family:inherit;
-
-font-size:16px;
-
-font-weight:600;
-
-}
-
-.primary-btn{
-
-background:var(--primary);
-
-color:white;
-
-padding:15px 28px;
+padding:12px 24px;
 
 border:none;
 
-border-radius:18px;
+border-radius:14px;
 
-box-shadow:var(--shadow-soft);
+cursor:pointer;
+
+font-weight:600;
+
+font-size:15px;
+
+color:white;
+
+background:var(--gradient-main);
+
+box-shadow:
+
+var(--shadow),
+var(--shadow-glow);
+
+transition:var(--transition);
 
 }
 
-.primary-btn:hover{
 
-background:var(--primary-hover);
+button:hover,
+.btn:hover{
 
-transform:translateY(-3px);
+transform:
+translateY(-4px)
+scale(1.03);
 
-box-shadow:var(--shadow-hover);
+box-shadow:
+
+var(--shadow-hover),
+0 0 35px rgba(249,115,22,.30);
 
 }
+
+
+button:active,
+.btn:active{
+
+transform:scale(.96);
+
+}
+
+
+button::before,
+.btn::before{
+
+content:"";
+
+position:absolute;
+
+left:-120%;
+
+top:0;
+
+height:100%;
+
+width:70%;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.45),
+
+transparent
+
+);
+
+}
+
+
+button:hover::before,
+.btn:hover::before{
+
+animation:shine .8s linear;
+
+}
+
+
+@keyframes shine{
+
+100%{
+
+left:150%;
+
+}
+
+}
+
+
+/* Secondary */
 
 .secondary-btn{
 
@@ -46,10 +114,6 @@ color:var(--primary);
 
 border:2px solid var(--primary);
 
-padding:15px 28px;
-
-border-radius:18px;
-
 }
 
 .secondary-btn:hover{
@@ -57,5 +121,65 @@ border-radius:18px;
 background:var(--primary);
 
 color:white;
+
+}
+
+
+/* Logout */
+
+.logout-option{
+
+background:#fff5f5;
+
+color:#d83d3d;
+
+border:2px solid #ffd7d7;
+
+}
+
+.logout-option:hover{
+
+background:#d83d3d;
+
+color:white;
+
+}
+.logout-option{
+
+width:100%;
+
+border:none;
+
+padding:12px;
+
+border-radius:14px;
+
+background:linear-gradient(
+135deg,
+#d89a7b,
+#f97316
+);
+
+color:white;
+
+font-weight:600;
+
+transition:.35s;
+
+box-shadow:
+
+0 8px 20px rgba(216,154,123,.30);
+
+}
+.logout-option:hover{
+
+transform:
+
+translateY(-3px)
+scale(1.03);
+
+box-shadow:
+
+0 12px 28px rgba(216,154,123,.45);
 
 }

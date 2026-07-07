@@ -78,3 +78,44 @@
 .profile-menu button:hover{
     background:#fff4ec;
 }
+.navbar-logo{
+
+    width:100px;
+
+    height:100px;
+
+    object-fit:contain;
+
+    margin:0 15px;
+
+    transition:.35s;
+
+    cursor:pointer;
+
+}
+
+.navbar-logo:hover{
+
+    transform:scale(1.08) rotate(-3deg);
+
+    filter:drop-shadow(0 0 10px rgba(255,107,0,.45));
+
+}
+
+.nav-title{
+
+    color:#ff6b00;
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+.nav-subtitle{
+
+    color:#8c5b45;
+
+    font-size:14px;
+
+}

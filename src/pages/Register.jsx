@@ -1,3 +1,4 @@
+import logo from "../assets/logo.jpeg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../services/api";
@@ -79,11 +80,16 @@ boxShadow:"0 8px 25px rgba(0,0,0,.1)"
 <div style={{textAlign:"center"}}>
 
 <img
-src="/logo.png"
-alt="Logo"
-style={{width:"120px"}}
+  src={logo}
+  alt="Bakene Logo"
+  style={{
+    width: "220px",
+    height: "auto",
+    display: "block",
+    margin: "0 auto 25px",
+    objectFit: "contain",
+  }}
 />
-
 <h1 style={{color:"#D4A373"}}>
 Create Account
 </h1>

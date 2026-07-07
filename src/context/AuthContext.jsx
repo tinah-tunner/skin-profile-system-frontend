@@ -1,17 +1,27 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
+// Create Context
 const AuthContext = createContext();
 
+// Custom Hook
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
+
+// Provider
 export const AuthProvider = ({ children }) => {
-  // Load saved authentication from localStorage
   const [token, setToken] = useState(localStorage.getItem("token"));
+
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem("user");
     return savedUser ? JSON.parse(savedUser) : null;
   });
 
+  // Login
   const login = (data) => {
     const loggedInUser = {
+      id: data.id,
+      fullName: data.fullName,
       email: data.email,
       role: data.role,
     };
@@ -23,6 +33,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(loggedInUser));
   };
 
+  // Logout
   const logout = () => {
     setToken(null);
     setUser(null);
@@ -31,7 +42,19 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
-  const isAuthenticated = !!token;
+  // Restore Session
+  useEffect(() => {
+    const savedToken = localStorage.getItem("token");
+    const savedUser = localStorage.getItem("user");
+
+    if (savedToken) {
+      setToken(savedToken);
+    }
+
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -40,7 +63,7 @@ export const AuthProvider = ({ children }) => {
         user,
         login,
         logout,
-        isAuthenticated,
+        isAuthenticated: !!token,
       }}
     >
       {children}
@@ -48,4 +71,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export default AuthContext;

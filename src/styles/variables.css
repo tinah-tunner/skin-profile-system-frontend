@@ -1,48 +1,156 @@
 :root{
 
-/* ==========================
-   BAKENE BRAND
-========================== */
+/* Main Brand */
+--primary:#ff6b00;
+--primary-light:#ff8a1f;
+--primary-dark:#e85d04;
 
---primary:#F4A261;
---primary-hover:#EA8B3D;
+/* Rose Gold */
+--rose-gold:#d98c6a;
+--rose-gold-light:#efc3aa;
 
---rose:#F8E5DD;
+/* Backgrounds */
+--background:#fffaf7;
+--surface:#ffffff;
 
---background:#FFF9F5;
+/* Text */
+--text:#2d2d2d;
+--text-light:#666;
 
---card:#FFFFFF;
+/* Borders */
+--border:#d98c6a;
 
---sidebar:#FFFFFF;
-
---text:#444;
-
---light-text:#8D8D8D;
-
---border:#F2DED4;
-
-
-/* ==========================
-   SHADOWS
-========================== */
-
---shadow-soft:
-0 8px 25px rgba(232,180,160,.20);
+/* Shadows */
+--shadow:
+0 10px 25px rgba(255,107,0,.18);
 
 --shadow-hover:
-0 15px 35px rgba(244,162,97,.25);
+0 18px 40px rgba(255,107,0,.35);
 
+}
+button,
+.quick-btn{
 
-/* ==========================
-   BORDER
-========================== */
+background:linear-gradient(
+135deg,
+#ff6b00,
+#ff8a1f
+);
 
---radius:22px;
+color:white;
 
+border:2px solid #d98c6a;
 
-/* ==========================
-   TRANSITIONS
-========================== */
+box-shadow:
+0 10px 25px rgba(255,107,0,.30);
 
---transition:.35s ease;
+transition:.35s;
+}
+
+button:hover,
+.quick-btn:hover{
+
+background:linear-gradient(
+135deg,
+#ff7f11,
+#ff9e2c
+);
+
+transform:translateY(-4px);
+
+box-shadow:
+0 18px 35px rgba(255,107,0,.40);
+
+}
+.stat-card{
+
+background:#fff;
+
+border:2px solid #d98c6a;
+
+border-radius:20px;
+
+box-shadow:
+0 10px 25px rgba(255,107,0,.12);
+
+transition:.35s;
+
+}
+
+.stat-card:hover{
+
+border-color:#ff6b00;
+
+box-shadow:
+0 18px 35px rgba(255,107,0,.28);
+
+}
+.sidebar a{
+
+background:white;
+
+border:2px solid #d98c6a;
+
+box-shadow:
+0 6px 15px rgba(255,107,0,.12);
+
+}
+
+.sidebar a:hover{
+
+background:linear-gradient(
+135deg,
+#fff2e8,
+#ffffff
+);
+
+border-color:#ff6b00;
+
+box-shadow:
+0 12px 28px rgba(255,107,0,.22);
+
+}
+.sidebar a.active{
+
+background:linear-gradient(
+135deg,
+#ff6b00,
+#ff8a1f
+);
+
+color:white;
+
+border:none;
+
+box-shadow:
+0 15px 35px rgba(255,107,0,.40);
+
+}
+.stat-title{
+
+color:#ff6b00;
+
+font-weight:700;
+
+}
+.stat-icon{
+
+background:#fff2ea;
+
+border:2px solid #d98c6a;
+
+font-size:30px;
+
+}
+.panel{
+
+background:white;
+
+border:2px solid #d98c6a;
+
+border-radius:20px;
+
+box-shadow:
+0 10px 20px rgba(255,107,0,.12);
+
 }

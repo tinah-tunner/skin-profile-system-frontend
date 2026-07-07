@@ -183,32 +183,123 @@
   }
 }
 nav {
-  marginTop: "10px",
-  display "flex",
-  gap "10px",
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 nav button {
-  padding: "8px 12px",
-  border "none",
-  borderRadius "6px",
-  cursor "pointer",
-  background "white",
-  color "#e63946",
-  fontWeight "bold",
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: white;
+  color: #e63946;
+  font-weight: bold;
 }
-nav {
-  display: "flex",
-  gap "10px",
-  marginTop "10px",
+ :root {
+  --rose-gold: #d89a7b;
+  --rose-gold-light: #efc3aa;
+  --orange: #f97316;
+  --cream: #fffdfb;
 }
 
-nav button {
-  padding: "8px 12px",
-  border "none",
-  borderRadius "6px",
-  cursor "pointer",
-  background "white",
-  color "#e63946",
-  fontWeight "bold",
+button,
+.btn {
+  background: linear-gradient(
+    135deg,
+    var(--rose-gold),
+    var(--orange)
+  );
+  color: white;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 22px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .35s ease;
+  box-shadow:
+      0 10px 25px rgba(216,154,123,.30),
+      0 0 15px rgba(249,115,22,.15);
+}
+
+button:hover,
+.btn:hover{
+    transform: translateY(-3px) scale(1.03);
+
+    box-shadow:
+      0 15px 35px rgba(216,154,123,.45),
+      0 0 30px rgba(249,115,22,.35);
+
+    background: linear-gradient(
+      135deg,
+      #e7a98b,
+      #ff8c3a
+    );
+}
+
+button:active,
+.btn:active{
+    transform:scale(.96);
+}
+button::before,
+.btn::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    opacity:0;
+    transition:.4s;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,.5),
+        transparent
+    );
+}
+
+button:hover::before,
+.btn:hover::before{
+    animation:shine 1.2s linear;
+}
+
+@keyframes shine{
+    from{
+        transform:translateX(-120%);
+        opacity:1;
+    }
+    to{
+        transform:translateX(120%);
+        opacity:0;
+    }
+}
+@keyframes floatGlow{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-2px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+
+}
+
+button,
+.btn{
+    animation:floatGlow 3s ease-in-out infinite;
+}
+.logout-option{
+    background:#fff;
+    color:#d35454;
+    border:2px solid #ffd7d7;
+}
+
+.logout-option:hover{
+    background:#d35454;
+    color:white;
 }

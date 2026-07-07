@@ -1,10 +1,11 @@
-
-  import { useState } from "react";
+import { useState } from "react";
 import PersonalInformation from "./PersonalInformation";
 import ContactInformation from "./ContactInformation";
 import SkinAssessment from "./SkinAssessment";
 import MedicalInformation from "./MedicalInformation";
 import TherapistNotes from "./TherapistNotes";
+import UploadImages from "./UploadImages"; // NEW
+
 import { createClient } from "../../services/clientService";
 import { useNavigate } from "react-router-dom";
 
@@ -32,19 +33,23 @@ function ClientForm() {
     medicalConditions: "",
 
     therapistNotes: "",
+
+    // NEW
+    beforeImage: null,
+    afterImage: null,
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: files ? files[0] : value,
     }));
   };
 
   const nextStep = () => {
-    if (step < 5) setStep(step + 1);
+    if (step < 6) setStep(step + 1);
   };
 
   const previousStep = () => {
@@ -67,12 +72,12 @@ function ClientForm() {
     <form onSubmit={handleSubmit}>
 
       <div className="step-header">
-        <h2>Step {step} of 5</h2>
+        <h2>Step {step} of 6</h2>
 
         <div className="progress-bar">
           <div
             className="progress-fill"
-            style={{ width: `${(step / 5) * 100}%` }}
+            style={{ width: `${(step / 6) * 100}%` }}
           ></div>
         </div>
       </div>
@@ -114,6 +119,13 @@ function ClientForm() {
           />
         )}
 
+        {step === 6 && (
+          <UploadImages
+            formData={formData}
+            handleChange={handleChange}
+          />
+        )}
+
       </div>
 
       <div className="step-buttons">
@@ -128,7 +140,7 @@ function ClientForm() {
           </button>
         )}
 
-        {step < 5 ? (
+        {step < 6 ? (
           <button
             type="button"
             className="orange-btn"
