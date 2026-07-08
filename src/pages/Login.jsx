@@ -36,24 +36,12 @@ function Login() {
         return;
       }
 
+      // Save user in AuthContext
       authLogin(user);
 
-      switch (user.role) {
-        case "ADMIN":
-          navigate("/admin", { replace: true });
-          break;
+      // Always go to the main dashboard
+      navigate("/dashboard", { replace: true });
 
-        case "THERAPIST":
-          navigate("/therapist", { replace: true });
-          break;
-
-        case "CLIENT":
-          navigate("/client", { replace: true });
-          break;
-
-        default:
-          alert("Unknown user role.");
-      }
     } catch (err) {
       alert(err.message || "Login failed.");
     } finally {
@@ -86,17 +74,18 @@ function Login() {
           textAlign: "center",
         }}
       >
-       <img
-  src={logo}
-  alt="Bakene Logo"
-  style={{
-    width: "220px",
-    height: "auto",
-    display: "block",
-    margin: "0 auto 25px",
-    objectFit: "contain",
-  }}
-/>
+        <img
+          src={logo}
+          alt="Bakene Logo"
+          style={{
+            width: "220px",
+            height: "auto",
+            display: "block",
+            margin: "0 auto 25px",
+            objectFit: "contain",
+          }}
+        />
+
         <h1
           style={{
             color: "#FF6B00",
@@ -174,7 +163,6 @@ function Login() {
               fontWeight: "700",
               cursor: loading ? "not-allowed" : "pointer",
               boxShadow: "0 12px 28px rgba(255,107,0,.35)",
-              transition: "all .3s ease",
             }}
           >
             {loading ? "Logging in..." : "Log In"}
@@ -207,7 +195,6 @@ function Login() {
               padding: "12px 22px",
               fontWeight: "700",
               cursor: "pointer",
-              transition: ".3s",
             }}
           >
             Create Account

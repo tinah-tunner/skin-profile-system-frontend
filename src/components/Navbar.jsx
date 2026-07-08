@@ -28,13 +28,7 @@ function Navbar() {
           className="navbar-logo"
         />
 
-        <div>
-          <h2 className="nav-title">Skin Profile System</h2>
-          <p className="nav-subtitle">
-
-          </p>
-        </div>
-
+        
       </div>
 
       <div className="nav-right">

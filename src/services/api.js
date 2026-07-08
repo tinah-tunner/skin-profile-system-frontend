@@ -1,4 +1,4 @@
-const BASE_URL = "https://skin-profile-system-backendfinal.onrender.com/api";
+export const BASE_URL = "https://skin-profile-system-backendfinal.onrender.com/api";
 
 // =========================
 // LOGIN
@@ -17,6 +17,7 @@ export async function login(email, password) {
   }
 
   return await response.json();
+
 }
 
 // =========================

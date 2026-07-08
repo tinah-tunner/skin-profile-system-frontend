@@ -29,8 +29,6 @@ function Sidebar({ sidebarOpen }) {
           className="sidebar-logo"
         />
 
-        <h1>BAKENE</h1>
-
         <p>Skin Profile System</p>
 
       </div>

@@ -1,3 +1,4 @@
+import { uploadImage } from "../../services/imageService";
 import { useState } from "react";
 import PersonalInformation from "./PersonalInformation";
 import ContactInformation from "./ContactInformation";
@@ -56,18 +57,40 @@ function ClientForm() {
     if (step > 1) setStep(step - 1);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      await createClient(formData);
-      alert("Client saved successfully.");
-      navigate("/clients");
-    } catch (err) {
-      alert(err.message);
+  try {
+    let beforeImageUrl = "";
+    let afterImageUrl = "";
+
+    // Upload before image
+    if (formData.beforeImage) {
+      beforeImageUrl = await uploadImage(formData.beforeImage);
     }
-  };
 
+    // Upload after image
+    if (formData.afterImage) {
+      afterImageUrl = await uploadImage(formData.afterImage);
+    }
+
+    const clientData = {
+      ...formData,
+      beforeImage: beforeImageUrl,
+      afterImage: afterImageUrl,
+    };
+
+    const savedClient = await createClient(clientData);
+
+    alert("Client saved successfully!");
+
+    navigate(`/client/${savedClient.id}`);
+
+  } catch (err) {
+    console.error(err);
+    alert(err.message || "Failed to save client.");
+  }
+};
   return (
     <form onSubmit={handleSubmit}>
 
