@@ -1,127 +1,42 @@
 import { useState } from "react";
 
+import powerPowder from "../assets/power-powder.jpeg";
+import moisturizer from "../assets/moisturizer.jpeg";
+import sunscreen from "../assets/sunscreen.jpeg";
+
 function Products() {
   const [products] = useState([
     {
       id: 1,
       name: "Power Powder",
-      price: 250,
-      image:
-        "https://via.placeholder.com/250x250?text=Power+Powder",
+      price: 120,
+      image: powerPowder,
       description:
-        "A skin treatment powder designed to support clearer and healthier skin.",
-      benefits: [
-        "Helps reduce acne",
-        "Brightens complexion",
-        "Improves skin texture",
-      ],
-      ingredients: [
-        "Niacinamide",
-        "Zinc Oxide",
-        "Vitamin C",
-      ],
-      history:
-        "Developed for clients experiencing acne and pigmentation concerns.",
+        "Power Powder 150ml is an innovative powder-to-foam cleanser that deeply cleanses and gently exfoliates the skin to effectively target impurities and promote skin clarity. It leaves your skin feeling refreshed, smoother, and brighter after each use. This cleanser is a spa day in a bottle.",
     },
 
     {
       id: 2,
       name: "Moisturizer",
-      price: 180,
-      image:
-        "https://via.placeholder.com/250x250?text=Moisturizer",
+      price: 140,
+      image: moisturizer,
       description:
-        "Hydrating moisturizer suitable for daily skincare routines.",
-      benefits: [
-        "Deep hydration",
-        "Strengthens skin barrier",
-        "Smooth skin appearance",
-      ],
-      ingredients: [
-        "Hyaluronic Acid",
-        "Shea Butter",
-        "Vitamin E",
-      ],
-      history:
-        "Created to provide long-lasting hydration for dry and sensitive skin.",
+        "This moisturiser boasts a hydrating blend of ingredients that nourish and protect the skin. The addition of extracts and powerful active ingredients contributes to brightening and smoothing the skin, resulting in a glass-like complexion with consistent use.",
     },
 
     {
       id: 3,
       name: "Sunscreen",
-      price: 220,
-      image:
-        "https://via.placeholder.com/250x250?text=Sunscreen",
+      price: 159,
+      image: sunscreen,
       description:
-        "Broad spectrum sunscreen for daily UV protection.",
-      benefits: [
-        "Prevents sun damage",
-        "Reduces premature aging",
-        "Protects against UV rays",
-      ],
-      ingredients: [
-        "Zinc Oxide",
-        "Titanium Dioxide",
-        "Vitamin E",
-      ],
-      history:
-        "Recommended for daily protection against harmful sun exposure.",
+        "This sunscreen provides broad-spectrum UV protection while hydrating and nourishing the skin. It helps prevent sun damage, premature ageing, and pigmentation, making it ideal for daily use.",
     },
   ]);
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.heading}>
-        Product Management
-      </h1>
-
-      {/* Upload Section */}
-
-      <div style={styles.uploadCard}>
-        <h2>Upload Product</h2>
-
-        <input
-          type="text"
-          placeholder="Product Name"
-          style={styles.input}
-        />
-
-        <input
-          type="number"
-          placeholder="Price"
-          style={styles.input}
-        />
-
-        <textarea
-          placeholder="Product Description"
-          style={styles.textarea}
-        />
-
-        <textarea
-          placeholder="Benefits"
-          style={styles.textarea}
-        />
-
-        <textarea
-          placeholder="Ingredients"
-          style={styles.textarea}
-        />
-
-        <textarea
-          placeholder="Product History"
-          style={styles.textarea}
-        />
-
-        <input
-          type="file"
-          accept="image/*"
-          style={styles.input}
-        />
-
-        <button style={styles.uploadBtn}>
-          Upload Product
-        </button>
-      </div>
+      <h1 style={styles.heading}>Product Management</h1>
 
       <div style={styles.grid}>
         {products.map((product) => (
@@ -134,39 +49,11 @@ function Products() {
 
             <h2>{product.name}</h2>
 
-            <h3>R{product.price}</h3>
+            <h3 style={styles.price}>R{product.price}</h3>
 
-            <p>{product.description}</p>
-
-            <h4>Benefits</h4>
-
-            <ul>
-              {product.benefits.map((b, i) => (
-                <li key={i}>{b}</li>
-              ))}
-            </ul>
-
-            <h4>Ingredients</h4>
-
-            <ul>
-              {product.ingredients.map((i, index) => (
-                <li key={index}>{i}</li>
-              ))}
-            </ul>
-
-            <h4>Product History</h4>
-
-            <p>{product.history}</p>
-
-            <div style={styles.actions}>
-              <button style={styles.editBtn}>
-                Edit Product
-              </button>
-
-              <button style={styles.deleteBtn}>
-                Delete Product
-              </button>
-            </div>
+            <p style={styles.description}>
+              {product.description}
+            </p>
           </div>
         ))}
       </div>
@@ -183,86 +70,47 @@ const styles = {
 
   heading: {
     color: "#ff6b35",
-    marginBottom: "20px",
-  },
-
-  uploadCard: {
-    background: "#fff",
-    padding: "20px",
-    borderRadius: "20px",
-    marginBottom: "30px",
-    border: "2px solid #f4c2c2",
-  },
-
-  input: {
-    width: "100%",
-    padding: "12px",
-    marginBottom: "10px",
-    borderRadius: "10px",
-    border: "1px solid #ddd",
-  },
-
-  textarea: {
-    width: "100%",
-    minHeight: "80px",
-    marginBottom: "10px",
-    borderRadius: "10px",
-    padding: "12px",
-  },
-
-  uploadBtn: {
-    background: "#ff6b35",
-    color: "white",
-    border: "none",
-    padding: "12px 20px",
-    borderRadius: "10px",
-    cursor: "pointer",
+    marginBottom: "25px",
+    fontSize: "32px",
+    fontWeight: "bold",
   },
 
   grid: {
     display: "grid",
-    gridTemplateColumns:
-      "repeat(auto-fit, minmax(350px, 1fr))",
-    gap: "20px",
+    gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+    gap: "25px",
   },
 
   card: {
-    background: "white",
+    background: "#fff",
     borderRadius: "20px",
-    overflow: "hidden",
-    border: "2px solid #f4c2c2",
     padding: "20px",
+    border: "2px solid #f4c2c2",
+    boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
+    transition: "0.3s",
   },
 
   image: {
     width: "100%",
-    height: "250px",
+    height: "260px",
     objectFit: "cover",
     borderRadius: "15px",
+    marginBottom: "15px",
   },
 
-  actions: {
-    display: "flex",
-    gap: "10px",
-    marginTop: "20px",
+  price: {
+    color: "#ff6b35",
+    marginTop: "10px",
+    marginBottom: "15px",
+    fontSize: "24px",
+    fontWeight: "bold",
   },
 
-  editBtn: {
-    flex: 1,
-    background: "#ffb703",
-    color: "white",
-    border: "none",
-    padding: "12px",
-    borderRadius: "10px",
-  },
-
-  deleteBtn: {
-    flex: 1,
-    background: "#ff6b35",
-    color: "white",
-    border: "none",
-    padding: "12px",
-    borderRadius: "10px",
+  description: {
+    color: "#555",
+    lineHeight: "1.7",
+    textAlign: "justify",
+    fontSize: "15px",
   },
 };
 
