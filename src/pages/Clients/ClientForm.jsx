@@ -15,40 +15,44 @@ function ClientForm() {
 
   const [step, setStep] = useState(1);
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    dateOfBirth: "",
-    gender: "",
+ const [formData, setFormData] = useState({
+  firstName: "",
+  lastName: "",
+  email: "",
+  phoneNumber: "",
+  dateOfBirth: "",
+  gender: "",
 
-    address: "",
-    emergencyContact: "",
+  address: "",
+  emergencyContact: "",
 
-    skinType: "",
-    skinConcern: "",
+  // IMPORTANT
+  skinType: null,
 
-    allergies: "",
-    currentMedication: "",
-    medicalConditions: "",
+  // Backend expects a Set<SkinConcern>
+  skinConcerns: [],
 
-    therapistNotes: "",
+  allergies: "",
+  currentMedication: "",
+  medicalConditions: "",
 
-    // NEW
-    beforeImage: null,
-    afterImage: null,
-  });
+  therapistNotes: "",
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
+  beforeImage: null,
+  afterImage: null,
+});
+const handleChange = (e) => {
+  const { name, value, files } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: files ? files[0] : value,
-    }));
-  };
-
+  setFormData((prev) => ({
+    ...prev,
+    [name]: files
+      ? files[0]
+      : name === "skinConcerns"
+      ? value
+      : value,
+  }));
+};
   const nextStep = () => {
     if (step < 6) setStep(step + 1);
   };
@@ -74,12 +78,21 @@ const handleSubmit = async (e) => {
       afterImageUrl = await uploadImage(formData.afterImage);
     }
 
-    const clientData = {
-      ...formData,
-      beforeImage: beforeImageUrl,
-      afterImage: afterImageUrl,
-    };
+  const clientData = {
+  ...formData,
 
+  // Never send ""
+  skinType: formData.skinType || null,
+
+  // Backend expects Set<SkinConcern>
+  skinConcerns:
+    formData.skinConcerns.length > 0
+      ? formData.skinConcerns
+      : [],
+
+  beforeImage: beforeImageUrl,
+  afterImage: afterImageUrl,
+};
     const savedClient = await createClient(clientData);
 
     alert("Client saved successfully!");

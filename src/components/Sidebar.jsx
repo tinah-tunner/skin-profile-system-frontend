@@ -9,6 +9,7 @@ import {
   FiBell,
   FiLogOut,
   FiClipboard,
+  FiEye,
 } from "react-icons/fi";
 
 function Sidebar({ sidebarOpen }) {
@@ -47,6 +48,14 @@ function Sidebar({ sidebarOpen }) {
         </Link>
 
         <Link
+          to="/ClientDashboard"
+          className={isActive("/ClientDashboard") ? "active" : ""}
+        >
+          <FiEye />
+          View Clients
+        </Link>
+
+        <Link
           to="/booking"
           className={isActive("/booking") ? "active" : ""}
         >
@@ -62,7 +71,6 @@ function Sidebar({ sidebarOpen }) {
           Add Consultation
         </Link>
 
-    
         <Link
           to="/products"
           className={isActive("/products") ? "active" : ""}

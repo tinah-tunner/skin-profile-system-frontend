@@ -121,48 +121,6 @@ function Dashboard() {
 
       <div className="dashboard-bottom">
         <div className="panel">
-          <h3>Quick Actions</h3>
-
-          <button
-            className="quick-btn"
-            onClick={() => navigate("/add-client")}
-          >
-            + Add Client
-          </button>
-
-          <button
-            className="quick-btn"
-            onClick={() => navigate("/clients")}
-          >
-         
-            Book Appointment
-          </button>
-
-        <button
-  className="quick-btn"
-  onClick={() => navigate("/ClientDashboard")}
->
-  View Clients
-</button>
-
-          <button
-            className="quick-btn"
-            onClick={() => navigate("/add-consultation")}
-          >
-            Add Consultation
-          </button>
-
-         
-
-          <button
-            className="quick-btn"
-            onClick={() => navigate("/notifications")}
-          >
-            Notifications
-          </button>
-        </div>
-
-        <div className="panel">
           <h3>📅 Upcoming Appointments</h3>
           <p>No appointments scheduled.</p>
         </div>

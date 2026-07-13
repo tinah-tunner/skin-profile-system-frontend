@@ -2,17 +2,15 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
-import ConsultationHistory from "./pages/ConsultationHistory";
 
+import ConsultationHistory from "./pages/ConsultationHistory";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import Notifications from "./pages/Notifications";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-
 import AdminDashboard from "./pages/AdminDashboard";
 import ClientDashboard from "./pages/ClientDashboard";
-
 import Clients from "./pages/Clients";
 import ClientProfile from "./pages/ClientProfile";
 import AddClient from "./pages/AddClient";
@@ -23,10 +21,10 @@ import AddConsultation from "./components/AddConsultation";
 export default function App() {
   return (
     <Routes>
-      {/* Redirect root to Login */}
+      {/* Redirect root */}
       <Route path="/" element={<Navigate to="/login" replace />} />
 
-      {/* Public Routes */}
+      {/* Public */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
@@ -54,22 +52,35 @@ export default function App() {
         }
       />
 
+      {/* Consultation History */}
       <Route
-  path="/consultations"
-  element={
-    <ProtectedRoute>
-      <Layout>
-        <ConsultationHistory />
-      </Layout>
-    </ProtectedRoute>
-  }
-/>
+        path="/consultations"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ConsultationHistory />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
 
-      {/* Client Dashboard */}
+      {/* Client's own dashboard */}
       <Route
         path="/client"
         element={
           <ProtectedRoute allowedRoles={["CLIENT"]}>
+            <Layout>
+              <ClientDashboard />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      {/* View Clients (Sidebar) */}
+      <Route
+        path="/ClientDashboard"
+        element={
+          <ProtectedRoute>
             <Layout>
               <ClientDashboard />
             </Layout>
@@ -137,7 +148,6 @@ export default function App() {
         }
       />
 
-    
       {/* Products */}
       <Route
         path="/products"
@@ -172,7 +182,7 @@ export default function App() {
         }
       />
 
-      {/* Catch All */}
+      {/* Catch all */}
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );

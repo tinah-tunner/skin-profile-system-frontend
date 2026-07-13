@@ -21,10 +21,28 @@ function ClientDashboard() {
   }, []);
 
   return (
-    <div style={{ padding: "30px" }}>
-      <h1>Registered Clients</h1>
+    <div
+      style={{
+        padding: "30px",
+        background: "#fffaf7",
+        minHeight: "100vh",
+      }}
+    >
+      <h1
+        style={{
+          color: "#ff6b35",
+          marginBottom: "10px",
+        }}
+      >
+        Registered Clients
+      </h1>
 
-      <p style={{ color: "#666", marginBottom: "25px" }}>
+      <p
+        style={{
+          color: "#666",
+          marginBottom: "30px",
+        }}
+      >
         Total Clients: <strong>{clients.length}</strong>
       </p>
 
@@ -34,10 +52,10 @@ function ClientDashboard() {
         <div
           style={{
             background: "#fff",
-            padding: "20px",
-            borderRadius: "12px",
+            padding: "25px",
+            borderRadius: "15px",
             textAlign: "center",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+            border: "2px solid #f4c2c2",
           }}
         >
           No registered clients found.
@@ -55,26 +73,56 @@ function ClientDashboard() {
               key={client.id}
               style={{
                 background: "#fff",
-                borderRadius: "15px",
+                borderRadius: "18px",
                 padding: "20px",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.08)",
-                borderLeft: "5px solid #D4A373",
+                border: "2px solid #f4c2c2",
+                boxShadow: "0 8px 20px rgba(255,107,53,0.08)",
               }}
             >
-              <h3 style={{ marginBottom: "10px", color: "#D4A373" }}>
-                {client.fullName}
-              </h3>
+              <h2
+                style={{
+                  color: "#ff6b35",
+                  marginBottom: "15px",
+                }}
+              >
+                {client.firstName} {client.lastName}
+              </h2>
 
               <p>
-                <strong>Email:</strong> {client.email}
+                <strong>Client Number:</strong>{" "}
+                {client.clientNumber || "N/A"}
               </p>
 
               <p>
-                <strong>Role:</strong> {client.role}
+                <strong>Email:</strong>{" "}
+                {client.email || "N/A"}
               </p>
 
               <p>
-                <strong>ID:</strong> {client.id}
+                <strong>Phone:</strong>{" "}
+                {client.phoneNumber || "N/A"}
+              </p>
+
+              <p>
+                <strong>Gender:</strong>{" "}
+                {client.gender || "N/A"}
+              </p>
+
+              <p>
+                <strong>Skin Type:</strong>{" "}
+                {client.skinType || "N/A"}
+              </p>
+
+              <p>
+                <strong>Skin Concerns:</strong>{" "}
+                {Array.isArray(client.skinConcerns) &&
+                client.skinConcerns.length > 0
+                  ? client.skinConcerns
+                      .map((concern) =>
+                        concern.replace(/_/g, " ")
+                      )
+                      .join(", ")
+                  : "None"}
               </p>
             </div>
           ))}
