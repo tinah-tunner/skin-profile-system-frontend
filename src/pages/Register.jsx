@@ -34,7 +34,6 @@ function Register() {
         fullName,
         email,
         password,
-        role: "CLIENT"
       });
 
       alert("Registration successful!");

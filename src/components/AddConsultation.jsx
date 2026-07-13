@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AddConsultation() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     treatment: "",
     notes: "",
@@ -18,9 +21,17 @@ export default function AddConsultation() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(form);
+    const consultations =
+      JSON.parse(localStorage.getItem("consultations")) || [];
 
-    alert("Consultation Saved");
+    consultations.push(form);
+
+    localStorage.setItem(
+      "consultations",
+      JSON.stringify(consultations)
+    );
+
+    navigate("/consultations");
   };
 
   return (
@@ -31,24 +42,30 @@ export default function AddConsultation() {
         <input
           name="treatment"
           placeholder="Treatment Performed"
+          value={form.treatment}
           onChange={handleChange}
+          required
         />
 
         <textarea
           name="notes"
-          placeholder="Therapist Notes"
+          placeholder="Consultation Notes"
+          value={form.notes}
           onChange={handleChange}
+          required
         />
 
         <textarea
           name="products"
           placeholder="Products Used"
+          value={form.products}
           onChange={handleChange}
         />
 
         <input
           type="date"
           name="nextVisit"
+          value={form.nextVisit}
           onChange={handleChange}
         />
 

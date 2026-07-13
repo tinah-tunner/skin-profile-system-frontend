@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import logo from "../assets/logo.jpeg";
@@ -10,7 +9,7 @@ function Navbar() {
   const initials = user?.fullName
     ? user.fullName
         .split(" ")
-        .map((n) => n[0])
+        .map((name) => name[0])
         .join("")
         .substring(0, 2)
         .toUpperCase()
@@ -19,32 +18,33 @@ function Navbar() {
   return (
     <header className="navbar">
       <div className="nav-left">
-
         <button className="menu-btn">☰</button>
 
         <img
           src={logo}
-          alt="Bakene"
+          alt="Bakene Logo"
           className="navbar-logo"
         />
-
-        
       </div>
 
       <div className="nav-right">
-
         <button className="icon-btn">🔔</button>
 
         <div
           className="profile"
           onClick={() => setShowMenu(!showMenu)}
         >
-          <div className="avatar">
-            {initials}
-          </div>
+          <div className="avatar">{initials}</div>
 
           <div className="profile-info">
-            <strong>{user?.role || "User"}</strong>
+            <strong>
+              {user?.role === "ADMIN"
+                ? "Admin"
+                : user?.role === "CLIENT"
+                ? "Client"
+                : "User"}
+            </strong>
+
             <small>{user?.email}</small>
           </div>
 
@@ -53,7 +53,6 @@ function Navbar() {
 
         {showMenu && (
           <div className="profile-menu">
-
             <button>👤 My Profile</button>
 
             <button>⚙ Settings</button>
@@ -64,10 +63,8 @@ function Navbar() {
             >
               🚪 Logout
             </button>
-
           </div>
         )}
-
       </div>
     </header>
   );

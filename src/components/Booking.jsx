@@ -8,6 +8,7 @@ function Booking() {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedBooking, setSelectedBooking] = useState(null);
 
+  // FORM STATE
   const [form, setForm] = useState({
     clientName: "",
     therapistName: "",
@@ -16,9 +17,7 @@ function Booking() {
     status: "PENDING",
   });
 
-  // =========================
-  // LOAD BOOKINGS (BACKEND)
-  // =========================
+  // LOAD BOOKINGS
   useEffect(() => {
     fetch("https://skin-profile-system-backendfinal.onrender.com/api/bookings")
       .then((res) => res.json())
@@ -26,18 +25,28 @@ function Booking() {
       .catch((err) => console.error("Error loading bookings:", err));
   }, []);
 
-  // =========================
-  // FORM INPUT
-  // =========================
+  // HANDLE INPUT
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  // =========================
-  // CREATE BOOKING (BACKEND)
-  // =========================
+  // CREATE BOOKING
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const bookingExists = bookings.some(
+      (booking) =>
+        booking.date === form.date &&
+        booking.time === form.time
+    );
+
+    if (bookingExists) {
+      alert("This time slot is already booked.");
+      return;
+    }
 
     fetch("https://skin-profile-system-backendfinal.onrender.com/api/bookings", {
       method: "POST",
@@ -61,23 +70,22 @@ function Booking() {
       .catch((err) => console.error("Error creating booking:", err));
   };
 
-  // =========================
-  // DELETE BOOKING (BACKEND)
-  // =========================
+  // DELETE BOOKING
   const handleDelete = (id) => {
-    fetch(`https://skin-profile-system-backendfinal.onrender.com/api/bookings/${id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://skin-profile-system-backendfinal.onrender.com/api/bookings/${id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then(() => {
         setBookings(bookings.filter((b) => b.id !== id));
         setSelectedBooking(null);
       })
-      .catch((err) => console.error("Error deleting booking:", err));
+      .catch((err) => console.error(err));
   };
 
-  // =========================
-  // UPDATE STATUS (BACKEND)
-  // =========================
+  // UPDATE STATUS
   const handleStatusChange = (id, status) => {
     fetch(
       `https://skin-profile-system-backendfinal.onrender.com/api/bookings/${id}/status?status=${status}`,
@@ -92,12 +100,10 @@ function Booking() {
           )
         );
       })
-      .catch((err) => console.error("Error updating status:", err));
+      .catch((err) => console.error(err));
   };
 
-  // =========================
-  // FILTER BY DATE (CALENDAR)
-  // =========================
+  // FILTER BOOKINGS
   const filteredBookings = selectedDate
     ? bookings.filter((b) => b.date === selectedDate)
     : bookings;
@@ -106,7 +112,6 @@ function Booking() {
     <Layout>
       <h1 style={{ color: "#ff7a18" }}>Bookings</h1>
 
-      {/* ================= FORM ================= */}
       <form onSubmit={handleSubmit} style={styles.form}>
         <input
           name="clientName"
@@ -145,26 +150,23 @@ function Booking() {
         </button>
       </form>
 
-      {/* ================= CALENDAR ================= */}
       <BookingCalendar
         bookings={bookings}
-        onSelectDate={(date) => setSelectedDate(date)}
+        onSelectDate={setSelectedDate}
       />
 
-      {/* ================= CARDS ================= */}
-      <div style={{ marginTop: "20px" }}>
-        {filteredBookings.map((b) => (
+      <div style={{ marginTop: 20 }}>
+        {filteredBookings.map((booking) => (
           <BookingCard
-            key={b.id}
-            booking={b}
+            key={booking.id}
+            booking={booking}
             onDelete={handleDelete}
             onStatusChange={handleStatusChange}
-            onClick={() => setSelectedBooking(b)}
+            onClick={() => setSelectedBooking(booking)}
           />
         ))}
       </div>
 
-      {/* ================= DETAILS PANEL ================= */}
       {selectedBooking && (
         <div
           style={styles.overlay}
@@ -174,19 +176,31 @@ function Booking() {
             style={styles.panel}
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 style={{ color: "#ff7a18" }}>
-              Booking Details
-            </h2>
+            <h2 style={{ color: "#ff7a18" }}>Booking Details</h2>
 
-            <p><b>Client:</b> {selectedBooking.clientName}</p>
-            <p><b>Therapist:</b> {selectedBooking.therapistName}</p>
-            <p><b>Date:</b> {selectedBooking.date}</p>
-            <p><b>Time:</b> {selectedBooking.time}</p>
-            <p><b>Status:</b> {selectedBooking.status}</p>
+            <p>
+              <b>Client:</b> {selectedBooking.clientName}
+            </p>
+
+            <p>
+              <b>Therapist:</b> {selectedBooking.therapistName}
+            </p>
+
+            <p>
+              <b>Date:</b> {selectedBooking.date}
+            </p>
+
+            <p>
+              <b>Time:</b> {selectedBooking.time}
+            </p>
+
+            <p>
+              <b>Status:</b> {selectedBooking.status}
+            </p>
 
             <button
-              onClick={() => setSelectedBooking(null)}
               style={styles.close}
+              onClick={() => setSelectedBooking(null)}
             >
               Close
             </button>
@@ -197,16 +211,15 @@ function Booking() {
   );
 }
 
-// ================= STYLES =================
 const styles = {
   form: {
     display: "grid",
-    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateColumns: "repeat(2,1fr)",
     gap: "10px",
-    background: "white",
+    background: "#fff",
     padding: "15px",
     borderRadius: "12px",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+    boxShadow: "0 4px 12px rgba(0,0,0,.1)",
   },
 
   input: {
@@ -218,7 +231,7 @@ const styles = {
   button: {
     gridColumn: "span 2",
     background: "#ff7a18",
-    color: "white",
+    color: "#fff",
     border: "none",
     padding: "10px",
     borderRadius: "8px",
@@ -227,29 +240,27 @@ const styles = {
 
   overlay: {
     position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    background: "rgba(0,0,0,0.4)",
+    inset: 0,
+    background: "rgba(0,0,0,.4)",
     display: "flex",
     justifyContent: "flex-end",
   },
 
   panel: {
     width: "350px",
-    background: "white",
+    background: "#fff",
     padding: "20px",
-    borderLeft: "6px solid #ff7a18",
+    borderLeft: "5px solid #ff7a18",
   },
 
   close: {
     marginTop: "20px",
     background: "#333",
-    color: "white",
+    color: "#fff",
     border: "none",
     padding: "10px",
     borderRadius: "8px",
+    cursor: "pointer",
   },
 };
 

@@ -5,7 +5,6 @@ import logo from "../assets/logo.jpeg";
 import {
   FiHome,
   FiUsers,
-  FiCalendar,
   FiShoppingBag,
   FiBell,
   FiLogOut,
@@ -20,9 +19,7 @@ function Sidebar({ sidebarOpen }) {
 
   return (
     <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
-
       <div className="brand">
-
         <img
           src={logo}
           alt="Bakene Logo"
@@ -30,11 +27,9 @@ function Sidebar({ sidebarOpen }) {
         />
 
         <p>Skin Profile System</p>
-
       </div>
 
       <nav className="sidebar-links">
-
         <Link
           to="/dashboard"
           className={isActive("/dashboard") ? "active" : ""}
@@ -49,14 +44,6 @@ function Sidebar({ sidebarOpen }) {
         >
           <FiUsers />
           Clients
-        </Link>
-
-        <Link
-          to="/therapists"
-          className={isActive("/therapists") ? "active" : ""}
-        >
-          <FiUsers />
-          Therapists
         </Link>
 
         <Link
@@ -75,14 +62,7 @@ function Sidebar({ sidebarOpen }) {
           Add Consultation
         </Link>
 
-        <Link
-          to="/calendar"
-          className={isActive("/calendar") ? "active" : ""}
-        >
-          <FiCalendar />
-          Calendar
-        </Link>
-
+    
         <Link
           to="/products"
           className={isActive("/products") ? "active" : ""}
@@ -98,14 +78,12 @@ function Sidebar({ sidebarOpen }) {
           <FiBell />
           Notifications
         </Link>
-
       </nav>
 
       <button className="logout-btn" onClick={logout}>
         <FiLogOut />
         Logout
       </button>
-
     </aside>
   );
 }

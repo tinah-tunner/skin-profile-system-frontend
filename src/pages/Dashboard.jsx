@@ -5,19 +5,19 @@ import { getDashboardStats } from "../services/dashboardService";
 
 function Dashboard() {
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const [stats, setStats] = useState({
     totalClients: 0,
-    totalTherapists: 0,
     totalBookings: 0,
     totalProducts: 0,
     totalNotifications: 0,
     totalReports: 0,
+    totalConsultations: 0,
   });
 
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const { logout } = useAuth();
 
   useEffect(() => {
     async function loadDashboard() {
@@ -56,10 +56,10 @@ function Dashboard() {
       route: "/booking",
     },
     {
-      title: "Therapists",
-      value: stats.totalTherapists,
-      icon: "💆",
-      route: "/therapists",
+      title: "Consultations",
+      value: stats.totalConsultations,
+      icon: "📝",
+      route: "/add-consultation",
     },
     {
       title: "Products",
@@ -83,16 +83,16 @@ function Dashboard() {
 
   return (
     <>
-     <div className="dashboard-header">
-  <h1 className="nav-title">Dashboard</h1>
+      <div className="dashboard-header">
+        <h1 className="nav-title">Dashboard</h1>
 
-  <button
-    className="dashboard-logout-btn"
-    onClick={logout}
-  >
-    🚪 Logout
-  </button>
-</div>
+        <button
+          className="dashboard-logout-btn"
+          onClick={logout}
+        >
+          🚪 Logout
+        </button>
+      </div>
 
       <input
         type="text"
@@ -134,36 +134,25 @@ function Dashboard() {
             className="quick-btn"
             onClick={() => navigate("/clients")}
           >
-            View Clients
-          </button>
-
-          <button
-            className="quick-btn"
-            onClick={() => navigate("/booking")}
-          >
+         
             Book Appointment
           </button>
 
-          <button
-            className="quick-btn"
-            onClick={() => navigate("/therapists")}
-          >
-            Therapists
-          </button>
+        <button
+  className="quick-btn"
+  onClick={() => navigate("/ClientDashboard")}
+>
+  View Clients
+</button>
 
           <button
             className="quick-btn"
-            onClick={() => navigate("/products")}
+            onClick={() => navigate("/add-consultation")}
           >
-            Products
+            Add Consultation
           </button>
 
-          <button
-            className="quick-btn"
-            onClick={() => navigate("/calendar")}
-          >
-            Calendar
-          </button>
+         
 
           <button
             className="quick-btn"
