@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import Layout from "./Layout";
 import BookingCard from "./BookingCard";
 import BookingCalendar from "./BookingCalendar";
 
 function Booking() {
   const [bookings, setBookings] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
-  const [selectedBooking, setSelectedBooking] = useState(null);
 
-  // FORM STATE
   const [form, setForm] = useState({
     clientName: "",
     therapistName: "",
@@ -17,7 +14,7 @@ function Booking() {
     status: "PENDING",
   });
 
-  // LOAD BOOKINGS
+  // Load bookings
   useEffect(() => {
     fetch("https://skin-profile-system-backendfinal.onrender.com/api/bookings")
       .then((res) => res.json())
@@ -25,7 +22,7 @@ function Booking() {
       .catch((err) => console.error("Error loading bookings:", err));
   }, []);
 
-  // HANDLE INPUT
+  // Handle input
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -33,8 +30,8 @@ function Booking() {
     });
   };
 
-  // CREATE BOOKING
-  const handleSubmit = (e) => {
+  // Create booking
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const bookingExists = bookings.some(
@@ -48,69 +45,82 @@ function Booking() {
       return;
     }
 
-    fetch("https://skin-profile-system-backendfinal.onrender.com/api/bookings", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
-      .then((res) => res.json())
-      .then((newBooking) => {
-        setBookings([...bookings, newBooking]);
+    try {
+      const response = await fetch(
+        "https://skin-profile-system-backendfinal.onrender.com/api/bookings",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        }
+      );
 
-        setForm({
-          clientName: "",
-          therapistName: "",
-          date: "",
-          time: "",
-          status: "PENDING",
-        });
-      })
-      .catch((err) => console.error("Error creating booking:", err));
+      const newBooking = await response.json();
+
+      setBookings((prev) => [...prev, newBooking]);
+
+      setForm({
+        clientName: "",
+        therapistName: "",
+        date: "",
+        time: "",
+        status: "PENDING",
+      });
+
+      alert("Booking created successfully!");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to create booking.");
+    }
   };
 
-  // DELETE BOOKING
-  const handleDelete = (id) => {
-    fetch(
-      `https://skin-profile-system-backendfinal.onrender.com/api/bookings/${id}`,
-      {
-        method: "DELETE",
-      }
-    )
-      .then(() => {
-        setBookings(bookings.filter((b) => b.id !== id));
-        setSelectedBooking(null);
-      })
-      .catch((err) => console.error(err));
+  // Delete booking
+  const handleDelete = async (id) => {
+    try {
+      await fetch(
+        `https://skin-profile-system-backendfinal.onrender.com/api/bookings/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      setBookings((prev) => prev.filter((b) => b.id !== id));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  // UPDATE STATUS
-  const handleStatusChange = (id, status) => {
-    fetch(
-      `https://skin-profile-system-backendfinal.onrender.com/api/bookings/${id}/status?status=${status}`,
-      {
-        method: "PUT",
-      }
-    )
-      .then(() => {
-        setBookings(
-          bookings.map((b) =>
-            b.id === id ? { ...b, status } : b
-          )
-        );
-      })
-      .catch((err) => console.error(err));
+  // Update status
+  const handleStatusChange = async (id, status) => {
+    try {
+      await fetch(
+        `https://skin-profile-system-backendfinal.onrender.com/api/bookings/${id}/status?status=${status}`,
+        {
+          method: "PUT",
+        }
+      );
+
+      setBookings((prev) =>
+        prev.map((b) =>
+          b.id === id ? { ...b, status } : b
+        )
+      );
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  // FILTER BOOKINGS
   const filteredBookings = selectedDate
     ? bookings.filter((b) => b.date === selectedDate)
     : bookings;
 
   return (
-    <Layout>
-      <h1 style={{ color: "#ff7a18" }}>Bookings</h1>
+    <>
+      <h1 style={{ color: "#ff7a18", marginBottom: "20px" }}>
+        Bookings
+      </h1>
 
       <form onSubmit={handleSubmit} style={styles.form}>
         <input
@@ -119,6 +129,7 @@ function Booking() {
           value={form.clientName}
           onChange={handleChange}
           style={styles.input}
+          required
         />
 
         <input
@@ -127,6 +138,7 @@ function Booking() {
           value={form.therapistName}
           onChange={handleChange}
           style={styles.input}
+          required
         />
 
         <input
@@ -135,6 +147,7 @@ function Booking() {
           value={form.date}
           onChange={handleChange}
           style={styles.input}
+          required
         />
 
         <input
@@ -143,6 +156,7 @@ function Booking() {
           value={form.time}
           onChange={handleChange}
           style={styles.input}
+          required
         />
 
         <button type="submit" style={styles.button}>
@@ -155,59 +169,21 @@ function Booking() {
         onSelectDate={setSelectedDate}
       />
 
-      <div style={{ marginTop: 20 }}>
-        {filteredBookings.map((booking) => (
-          <BookingCard
-            key={booking.id}
-            booking={booking}
-            onDelete={handleDelete}
-            onStatusChange={handleStatusChange}
-            onClick={() => setSelectedBooking(booking)}
-          />
-        ))}
+      <div style={{ marginTop: "20px" }}>
+        {filteredBookings.length === 0 ? (
+          <p>No bookings found.</p>
+        ) : (
+          filteredBookings.map((booking) => (
+            <BookingCard
+              key={booking.id}
+              booking={booking}
+              onDelete={handleDelete}
+              onStatusChange={handleStatusChange}
+            />
+          ))
+        )}
       </div>
-
-      {selectedBooking && (
-        <div
-          style={styles.overlay}
-          onClick={() => setSelectedBooking(null)}
-        >
-          <div
-            style={styles.panel}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2 style={{ color: "#ff7a18" }}>Booking Details</h2>
-
-            <p>
-              <b>Client:</b> {selectedBooking.clientName}
-            </p>
-
-            <p>
-              <b>Therapist:</b> {selectedBooking.therapistName}
-            </p>
-
-            <p>
-              <b>Date:</b> {selectedBooking.date}
-            </p>
-
-            <p>
-              <b>Time:</b> {selectedBooking.time}
-            </p>
-
-            <p>
-              <b>Status:</b> {selectedBooking.status}
-            </p>
-
-            <button
-              style={styles.close}
-              onClick={() => setSelectedBooking(null)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-    </Layout>
+    </>
   );
 }
 
@@ -217,7 +193,7 @@ const styles = {
     gridTemplateColumns: "repeat(2,1fr)",
     gap: "10px",
     background: "#fff",
-    padding: "15px",
+    padding: "20px",
     borderRadius: "12px",
     boxShadow: "0 4px 12px rgba(0,0,0,.1)",
   },
@@ -233,34 +209,10 @@ const styles = {
     background: "#ff7a18",
     color: "#fff",
     border: "none",
-    padding: "10px",
+    padding: "12px",
     borderRadius: "8px",
     cursor: "pointer",
-  },
-
-  overlay: {
-    position: "fixed",
-    inset: 0,
-    background: "rgba(0,0,0,.4)",
-    display: "flex",
-    justifyContent: "flex-end",
-  },
-
-  panel: {
-    width: "350px",
-    background: "#fff",
-    padding: "20px",
-    borderLeft: "5px solid #ff7a18",
-  },
-
-  close: {
-    marginTop: "20px",
-    background: "#333",
-    color: "#fff",
-    border: "none",
-    padding: "10px",
-    borderRadius: "8px",
-    cursor: "pointer",
+    fontWeight: "bold",
   },
 };
 

@@ -9,7 +9,6 @@ import {
   FiBell,
   FiLogOut,
   FiClipboard,
-  FiEye,
 } from "react-icons/fi";
 
 function Sidebar({ sidebarOpen }) {
@@ -26,11 +25,11 @@ function Sidebar({ sidebarOpen }) {
           alt="Bakene Logo"
           className="sidebar-logo"
         />
-
         <p>Skin Profile System</p>
       </div>
 
       <nav className="sidebar-links">
+
         <Link
           to="/dashboard"
           className={isActive("/dashboard") ? "active" : ""}
@@ -44,15 +43,15 @@ function Sidebar({ sidebarOpen }) {
           className={isActive("/clients") ? "active" : ""}
         >
           <FiUsers />
-          Clients
+          View Clients
         </Link>
 
         <Link
-          to="/ClientDashboard"
-          className={isActive("/ClientDashboard") ? "active" : ""}
+          to="/add-client"
+          className={isActive("/add-client") ? "active" : ""}
         >
-          <FiEye />
-          View Clients
+          <FiUsers />
+          Add Client
         </Link>
 
         <Link
@@ -86,6 +85,7 @@ function Sidebar({ sidebarOpen }) {
           <FiBell />
           Notifications
         </Link>
+
       </nav>
 
       <button className="logout-btn" onClick={logout}>

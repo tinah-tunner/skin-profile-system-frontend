@@ -1,24 +1,53 @@
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { uploadImage } from "../services/imageService";
+import {
+  uploadClientPhotos,
+  getClient,
+} from "../services/clientService";
 
 function ClientProfile() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [client, setClient] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const beforeInputRef = useRef(null);
+  const afterInputRef = useRef(null);
 
-  useEffect(() => {
+  const [client, setClient] = useState(null);
+  const [photos, setPhotos] = useState([]);
+const [photoType, setPhotoType] = useState("BEFORE");
+const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+
+  const loadClient = () => {
     fetch(`https://skin-profile-system-backendfinal.onrender.com/api/clients/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to load client");
         return res.json();
       })
       .then((data) => setClient(data))
-      .catch((err) => console.error(err))
+      .catch(console.error)
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadClient();
   }, [id]);
+
+  const loadPhotos = async () => {
+  try {
+    const data = await getClientPhotos(id);
+    setPhotos(data);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+useEffect(() => {
+  loadClient();
+  loadPhotos();
+}, [id]);
 
   const calculateAge = (dob) => {
     if (!dob) return "N/A";
@@ -28,11 +57,10 @@ function ClientProfile() {
 
     let age = today.getFullYear() - birth.getFullYear();
 
-    const month = today.getMonth() - birth.getMonth();
-
     if (
-      month < 0 ||
-      (month === 0 && today.getDate() < birth.getDate())
+      today.getMonth() < birth.getMonth() ||
+      (today.getMonth() === birth.getMonth() &&
+        today.getDate() < birth.getDate())
     ) {
       age--;
     }
@@ -40,19 +68,76 @@ function ClientProfile() {
     return age;
   };
 
+  const uploadPhotos = async () => {
+  const before = beforeInputRef.current.files[0];
+  const after = afterInputRef.current.files[0];
+
+  if (!before && !after) {
+    alert("Please choose at least one photo.");
+    return;
+  }
+
+  try {
+    setUploading(true);
+
+    await uploadClientPhotos(id, before, after);
+
+    const updated = await getClient(id);
+
+    setClient(updated);
+
+    beforeInputRef.current.value = "";
+    afterInputRef.current.value = "";
+
+    alert("Photos uploaded successfully!");
+
+  } catch (err) {
+    console.error(err);
+    alert("Upload failed.");
+  } finally {
+    setUploading(false);
+  }
+};
+
+      const response = await fetch(
+        `https://skin-profile-system-backendfinal.onrender.com/api/clients/${id}/images`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            beforeImage,
+            afterImage,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to save images");
+      }
+
+      const updatedClient = await response.json();
+
+      setClient(updatedClient);
+
+      beforeInputRef.current.value = "";
+      afterInputRef.current.value = "";
+
+      alert("Images uploaded successfully.");
+
+    } catch (err) {
+      console.error(err);
+      alert("Failed to upload images.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   if (loading) return <h2>Loading Client Profile...</h2>;
 
-  if (!client) return <h2>Client not found.</h2>;
-
   return (
-    <div
-      style={{
-        padding: "30px",
-        background: "#f8f9fc",
-        minHeight: "100vh",
-      }}
-    >
-      {/* HEADER */}
+    <div style={{ padding: "30px", background: "#f8f9fc", minHeight: "100vh" }}>
 
       <div
         style={{
@@ -60,87 +145,22 @@ function ClientProfile() {
           borderRadius: "20px",
           padding: "30px",
           display: "flex",
-          alignItems: "center",
           gap: "25px",
-          boxShadow: "0 8px 20px rgba(0,0,0,.08)",
           marginBottom: "25px",
+          boxShadow: "0 8px 20px rgba(0,0,0,.08)",
         }}
       >
-        <img
-          src={
-            client.profileImage ||
-            "https://via.placeholder.com/140?text=Client"
-          }
-          alt="Client"
-          style={{
-            width: "140px",
-            height: "140px",
-            borderRadius: "50%",
-            objectFit: "cover",
-            border: "5px solid #ff6b00",
-          }}
-        />
-
         <div>
-          <h1 style={{ color: "#ff6b00" }}>
+
+          <h1 style={{ color: "#ff6b35" }}>
             {client.firstName} {client.lastName}
           </h1>
 
-          <p>
-            <strong>Status:</strong> Active Client
-          </p>
+          <p><strong>Age:</strong> {calculateAge(client.dateOfBirth)}</p>
+          <p><strong>Skin Type:</strong> {client.skinType}</p>
 
-          <p>
-            <strong>Age:</strong> {calculateAge(client.dateOfBirth)}
-          </p>
-
-          <p>
-            <strong>Skin Type:</strong> {client.skinType || "N/A"}
-          </p>
         </div>
       </div>
-
-      {/* PERSONAL INFORMATION */}
-
-      <div className="profile-card">
-        <h2>👤 Personal Information</h2>
-
-        <p><strong>Name:</strong> {client.firstName} {client.lastName}</p>
-        <p><strong>Email:</strong> {client.email}</p>
-        <p><strong>Phone:</strong> {client.phoneNumber}</p>
-        <p><strong>Gender:</strong> {client.gender}</p>
-        <p><strong>Date of Birth:</strong> {client.dateOfBirth}</p>
-        <p><strong>Address:</strong> {client.address}</p>
-      </div>
-
-      {/* SKIN */}
-
-      <div className="profile-card">
-        <h2>✨ Skin Assessment</h2>
-
-        <p><strong>Skin Type:</strong> {client.skinType}</p>
-        <p><strong>Skin Concern:</strong> {client.skinConcern}</p>
-      </div>
-
-      {/* MEDICAL */}
-
-      <div className="profile-card">
-        <h2>🏥 Medical Information</h2>
-
-        <p><strong>Allergies:</strong> {client.allergies || "None"}</p>
-
-        <p>
-          <strong>Medication:</strong>{" "}
-          {client.currentMedication || "None"}
-        </p>
-
-        <p>
-          <strong>Medical Conditions:</strong>{" "}
-          {client.medicalConditions || "None"}
-        </p>
-      </div>
-
-      {/* PHOTOS */}
 
       <div className="profile-card">
         <h2>📷 Progress Photos</h2>
@@ -159,7 +179,7 @@ function ClientProfile() {
             {client.beforeImage ? (
               <img
                 src={client.beforeImage}
-                alt="Before"
+                alt=""
                 style={{
                   width: "100%",
                   borderRadius: "12px",
@@ -168,6 +188,12 @@ function ClientProfile() {
             ) : (
               <p>No Before Image</p>
             )}
+
+            <input
+              type="file"
+              ref={beforeInputRef}
+              accept="image/*"
+            />
           </div>
 
           <div>
@@ -176,7 +202,7 @@ function ClientProfile() {
             {client.afterImage ? (
               <img
                 src={client.afterImage}
-                alt="After"
+                alt=""
                 style={{
                   width: "100%",
                   borderRadius: "12px",
@@ -185,44 +211,28 @@ function ClientProfile() {
             ) : (
               <p>No After Image</p>
             )}
+
+            <input
+              type="file"
+              ref={afterInputRef}
+              accept="image/*"
+            />
           </div>
         </div>
+
+        <button
+          className="orange-btn"
+          style={{ marginTop: "20px" }}
+          onClick={uploadPhotos}
+          disabled={uploading}
+        >
+          {uploading ? "Uploading..." : "📷 Upload Progress Photos"}
+        </button>
       </div>
-
-      {/* APPOINTMENTS */}
-
-      <div className="profile-card">
-        <h2>📅 Upcoming Appointments</h2>
-
-        <p>No appointments scheduled.</p>
-      </div>
-
-      {/* NOTIFICATIONS */}
-
-      <div className="profile-card">
-        <h2>🔔 Notifications</h2>
-
-        <p>No notifications available.</p>
-      </div>
-
-      {/* NOTES */}
-
-      <div className="profile-card">
-        <h2>📝 Therapist Notes</h2>
-
-        <p>
-          {client.therapistNotes || "No therapist notes available."}
-        </p>
-      </div>
-
-      {/* ACTIONS */}
 
       <div
         style={{
-          display: "flex",
-          gap: "15px",
           marginTop: "30px",
-          flexWrap: "wrap",
         }}
       >
         <button
@@ -231,19 +241,8 @@ function ClientProfile() {
         >
           ← Back to Clients
         </button>
-
-        <button className="orange-btn">
-          ✏ Edit Client
-        </button>
-
-        <button className="orange-btn">
-          📅 Book Appointment
-        </button>
-
-        <button className="orange-btn">
-          📷 Upload Progress Photos
-        </button>
       </div>
+
     </div>
   );
 }

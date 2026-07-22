@@ -1,19 +1,21 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import Layout from "./components/Layout";
-import ProtectedRoute from "./components/ProtectedRoute";
 
-import ConsultationHistory from "./pages/ConsultationHistory";
 import Dashboard from "./pages/Dashboard";
-import Products from "./pages/Products";
-import Notifications from "./pages/Notifications";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
 import AdminDashboard from "./pages/AdminDashboard";
 import ClientDashboard from "./pages/ClientDashboard";
+
 import Clients from "./pages/Clients";
-import ClientProfile from "./pages/ClientProfile";
+import ClientFile from "./pages/ClientFile";
 import AddClient from "./pages/AddClient";
+
+import ConsultationHistory from "./pages/ConsultationHistory";
+import Products from "./pages/Products";
+import Notifications from "./pages/Notifications";
+
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 import Booking from "./components/Booking";
 import AddConsultation from "./components/AddConsultation";
@@ -21,8 +23,9 @@ import AddConsultation from "./components/AddConsultation";
 export default function App() {
   return (
     <Routes>
-      {/* Redirect root */}
-      <Route path="/" element={<Navigate to="/login" replace />} />
+
+      {/* Default page */}
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
       {/* Public */}
       <Route path="/login" element={<Login />} />
@@ -32,83 +35,49 @@ export default function App() {
       <Route
         path="/dashboard"
         element={
-          <ProtectedRoute>
-            <Layout>
-              <Dashboard />
-            </Layout>
-          </ProtectedRoute>
+          <Layout>
+            <Dashboard />
+          </Layout>
         }
       />
 
-      {/* Admin Dashboard */}
+      {/* Admin */}
       <Route
         path="/admin"
         element={
-          <ProtectedRoute allowedRoles={["ADMIN"]}>
-            <Layout>
-              <AdminDashboard />
-            </Layout>
-          </ProtectedRoute>
+          <Layout>
+            <AdminDashboard />
+          </Layout>
         }
       />
 
-      {/* Consultation History */}
-      <Route
-        path="/consultations"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <ConsultationHistory />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-
-      {/* Client's own dashboard */}
+      {/* Client Dashboard */}
       <Route
         path="/client"
         element={
-          <ProtectedRoute allowedRoles={["CLIENT"]}>
-            <Layout>
-              <ClientDashboard />
-            </Layout>
-          </ProtectedRoute>
+          <Layout>
+            <ClientDashboard />
+          </Layout>
         }
       />
 
-      {/* View Clients (Sidebar) */}
-      <Route
-        path="/ClientDashboard"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <ClientDashboard />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-
-      {/* Clients */}
+      {/* View Clients */}
       <Route
         path="/clients"
         element={
-          <ProtectedRoute>
-            <Layout>
-              <Clients />
-            </Layout>
-          </ProtectedRoute>
+          <Layout>
+            <Clients />
+          </Layout>
         }
       />
 
-      {/* Client Profile */}
+      {/* Individual Client File */}
       <Route
-        path="/client/:id"
+        path="/clients/:id"
         element={
-          <ProtectedRoute>
-            <Layout>
-              <ClientProfile />
-            </Layout>
-          </ProtectedRoute>
+          <Layout>
+            <ClientFile />
+          </Layout>
         }
       />
 
@@ -116,23 +85,19 @@ export default function App() {
       <Route
         path="/add-client"
         element={
-          <ProtectedRoute>
-            <Layout>
-              <AddClient />
-            </Layout>
-          </ProtectedRoute>
+          <Layout>
+            <AddClient />
+          </Layout>
         }
       />
 
-      {/* Booking */}
+      {/* Consultation History */}
       <Route
-        path="/booking"
+        path="/consultations"
         element={
-          <ProtectedRoute>
-            <Layout>
-              <Booking />
-            </Layout>
-          </ProtectedRoute>
+          <Layout>
+            <ConsultationHistory />
+          </Layout>
         }
       />
 
@@ -140,11 +105,19 @@ export default function App() {
       <Route
         path="/add-consultation"
         element={
-          <ProtectedRoute>
-            <Layout>
-              <AddConsultation />
-            </Layout>
-          </ProtectedRoute>
+          <Layout>
+            <AddConsultation />
+          </Layout>
+        }
+      />
+
+      {/* Booking */}
+      <Route
+        path="/booking"
+        element={
+          <Layout>
+            <Booking />
+          </Layout>
         }
       />
 
@@ -152,11 +125,9 @@ export default function App() {
       <Route
         path="/products"
         element={
-          <ProtectedRoute>
-            <Layout>
-              <Products />
-            </Layout>
-          </ProtectedRoute>
+          <Layout>
+            <Products />
+          </Layout>
         }
       />
 
@@ -164,26 +135,15 @@ export default function App() {
       <Route
         path="/notifications"
         element={
-          <ProtectedRoute>
-            <Layout>
-              <Notifications />
-            </Layout>
-          </ProtectedRoute>
+          <Layout>
+            <Notifications />
+          </Layout>
         }
       />
 
-      {/* Unauthorized */}
-      <Route
-        path="/unauthorized"
-        element={
-          <h1 style={{ textAlign: "center", marginTop: "100px" }}>
-            🚫 Unauthorized Access
-          </h1>
-        }
-      />
+      {/* Unknown routes */}
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
 
-      {/* Catch all */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 }

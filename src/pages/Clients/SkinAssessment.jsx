@@ -37,26 +37,19 @@ function SkinAssessment({ formData, handleChange }) {
         <option value="DEHYDRATED">Dehydrated</option>
       </select>
 
-     <select
+<select
   name="skinConcerns"
   value={formData.skinConcerns[0] || ""}
-  onChange={(e) =>
-    handleChange({
-      target: {
-        name: "skinConcerns",
-        value: [e.target.value],
-      },
-    })
-  }
+  onChange={handleChange}
 >
-        <option value="">Select Skin Concern</option>
+  <option value="">Select Skin Concern</option>
 
-        {concerns.map((concern) => (
-          <option key={concern} value={concern}>
-            {concern.replaceAll("_", " ")}
-          </option>
-        ))}
-      </select>
+  {concerns.map((concern) => (
+    <option key={concern} value={concern}>
+      {concern.replaceAll("_", " ")}
+    </option>
+  ))}
+</select>
 
     </div>
   );

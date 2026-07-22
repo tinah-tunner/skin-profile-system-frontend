@@ -71,7 +71,7 @@ function Dashboard() {
       title: "Reports",
       value: stats.totalReports,
       icon: "📊",
-      route: "/dashboard",
+      route: "/reports",
     },
     {
       title: "Notifications",

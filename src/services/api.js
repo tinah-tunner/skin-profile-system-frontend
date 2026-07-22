@@ -17,7 +17,6 @@ export async function login(email, password) {
   }
 
   return await response.json();
-
 }
 
 // =========================
@@ -45,15 +44,21 @@ export async function register(userData) {
 export async function apiFetch(endpoint, options = {}) {
   const token = localStorage.getItem("token");
 
+  const headers = {
+    ...(token && {
+      Authorization: `Bearer ${token}`,
+    }),
+    ...options.headers,
+  };
+
+  // Don't set Content-Type when uploading files
+  if (!options.isFormData) {
+    headers["Content-Type"] = "application/json";
+  }
+
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(token && {
-        Authorization: `Bearer ${token}`,
-      }),
-      ...options.headers,
-    },
+    headers,
   });
 
   if (!response.ok) {

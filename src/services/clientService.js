@@ -11,6 +11,31 @@ export async function createClient(client) {
 }
 
 // ===============================
+// UPLOAD CLIENT IMAGES
+// ===============================
+export async function uploadClientImages(
+  id,
+  beforeImage,
+  afterImage
+) {
+  const formData = new FormData();
+
+  if (beforeImage) {
+    formData.append("beforeImage", beforeImage);
+  }
+
+  if (afterImage) {
+    formData.append("afterImage", afterImage);
+  }
+
+  return await apiFetch(`/clients/${id}/images`, {
+    method: "POST",
+    body: formData,
+    isFormData: true,
+  });
+}
+
+// ===============================
 // GET ALL CLIENTS
 // ===============================
 export async function getClients() {
